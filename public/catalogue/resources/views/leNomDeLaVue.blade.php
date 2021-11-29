@@ -2,9 +2,9 @@
 <html lang="fr">
   <head>
       <meta charset="UTF-8">
-      <title>Mauvaise façon</title>
+      <title>Prenom</title>
   </head>
   <body>
-      <p>bonjour,{{$prenom}}</p>
+      <p>Bonjour {{$prenom}}</p>
   </body>
 </html>

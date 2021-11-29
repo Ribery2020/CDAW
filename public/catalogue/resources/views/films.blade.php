@@ -2,12 +2,9 @@
 <html lang="fr">
   <head>
       <meta charset="UTF-8">
-      <title>films</title>
+      <title>Prenom</title>
   </head>
   <body>
-      <p><?php
-      echo $films;
-      ?>
-      </p>
+      <p>Bonjour {{$prenom}}</p>
   </body>
 </html>
