@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <form id="addFilm" action="http://localhost:8082/catalogue/public/index.php/addFilm" method="POST">
+        <form id="addFilm" action="http://localhost:8082/catalogue/public/index.php/addFilm" method="GET">
             <div>
                 <label for="name">name: </label>
                 <input id="name" name="name" type="text">
@@ -25,6 +25,7 @@
                     <option value=''>-------------</option>
                     @foreach ($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
+                        <option value="1">1</option>
 
 
                     @endforeach

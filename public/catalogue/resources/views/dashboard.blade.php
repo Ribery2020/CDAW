@@ -24,14 +24,24 @@
                 @if (Route::has('login'))
                         @auth
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                                <li class="nav-item"><a method="POST" class="nav-link active" aria-current="page" href="{{ route('logout') }}">Logout</a></li>
+                                <li class="nav-item">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <a class="nav-link active" aria-current="page" href="{{ route('logout') }}"
+                                         onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </a>
+                                </form>
+                                </li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('profile.show') }}">Profil</a></li>
 
 
                                 <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">List</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="./playlist.html">PlayList</a></li>
+                                    <li><a class="dropdown-item" href="./playlist.html">playlist</a></li>
                                     <li><hr class="dropdown-divider" /></li>
                                     <li><a class="dropdown-item" href="./watchlist.html">WatchList</a></li>
                                     <li><a class="dropdown-item" href="./favoritelist.html">FavoriteList</a></li>
@@ -46,13 +56,19 @@
                     @endauth
                 @endif
                     <form class="d-flex">
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" id="navbarDropdown"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php echo Auth::user()->name; ?>
+                        </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="{{ route('profile.show') }}">Profil</a></li>
+                                        <li><hr class="dropdown-divider" /></li>
+                                        <li><a class="dropdown-item" href="{{ route('profile.show') }}">Playlist</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('profile.show') }}">FavoriteList</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('profile.show') }}">Playlist</a></li>
 
-                        <button class="btn btn-outline-dark"  type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            <a href="./playlist.html">PlayList</a>
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-
+                                        
+                                    </ul>
                     </form>
                 </div>
             </div>
