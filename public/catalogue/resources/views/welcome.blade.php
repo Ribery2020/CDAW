@@ -23,6 +23,9 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
+            li{
+                float:left; list-style:none;
+            }
         </style>
     </head>
 
@@ -86,9 +89,18 @@
             </div>
         </header>
 
-
+        <div>   
+        <ul>
+        <li><a class="nav-link" href="{{ url('/france')}}">France</a></li>
+        <li ><a class="nav-link" href="{{ url('/usa')}}">USA</a></li>
+        <li ><a class="nav-link" href="{{ url('/france')}}">Country3</a></li>
+        <li ><a class="nav-link" href="{{ url('/france')}}">Country4</a></li>
+        </ul>
+        </div>
 
         <section class="py-5">
+
+
         <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <?php

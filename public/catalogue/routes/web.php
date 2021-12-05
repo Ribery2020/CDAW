@@ -25,7 +25,7 @@ Route::get('listeMedias',function(){
     return view('listeMedias');
 });
 
-Route::get('listeMedias/{type}/{annee}', 'App\Http\controllers\listeMediasController@getListeMediasTypeAnnee');
+// Route::get('listeMedias/{type}/{annee}', 'App\Http\controllers\listeMediasController@getListeMediasTypeAnnee');
 Route::get('users/add', 'App\Http\controllers\UserController@add');
 Route::get('users/select', 'App\Http\controllers\UserController@select');
 
@@ -51,6 +51,15 @@ Route::get('films/{imdb_id}', function ($imdb_id) {
     return view('films', ['imdb_id' => $imdb_id]);
 });
 
+Route::get('france',function(){
+    return view('france');
+});
+Route::get('usa',function(){
+    return view('usa');
+});
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin', function () {
+    return view('admin');
+})->name('admin');
 
 
 
