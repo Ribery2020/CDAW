@@ -14,33 +14,97 @@
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <style type="text/css">
-            p{
-                font-family:微软雅黑;
-                font-size:14pt;
-                color:red;
-                background-color:gray;
-            }
-            ol{ /*设置有序列表的编号为小写罗马数字*/
-                list-style-type:lower-roman;
-            }
-            img {
-                width: 150px;
-                height: 100px;
-                margin-bottom: 10px;
-            }
-            .column1 {
-                float: left;
-                margin-left: 10%;
-                width: 20%;
-              }
-
-              /* 列后清除浮动 */
-              .row:after {
-                content: "";
-                display: table;
-                clear: both;
-              }
+        <style>
+         
+li {
+    text-align: -webkit-match-parent;
+    display: list-item;
+}
+ 
+.fav_list{
+    min-height: 95%;
+    padding: 0 32px 30px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-left: 200px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+}
+.fav_list_box{
+    box-sizing: border-box;
+    display: block;
+    overflow: hidden;
+    zoom: 1;
+}
+.fav_list_title{
+    height: 90px;
+    line-height: 90px;
+    /*border-bottom: 1px solid #e0e0e0;*/
+    display: block;
+}
+.fav_list_title_h3{
+    display : inline;
+}
+.fav_num{
+    font-size: 14px;
+    color: #4d4d4d;
+    margin-top: 30px;
+    float: right;
+}
+.my_fav_con{
+    display: block;
+}
+.my_fav_list{
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    border: 0;
+    display: block;
+    overflow: hidden;
+    zoom: 1;
+}
+.my_fav_list_li{
+    padding: 16px 0;
+    font-size: 0;
+    border-top: 1px solid #e0e0e0;
+    list-style: none;
+}
+.my_fav_list_a{
+    width: 78%;
+    line-height: 24px;
+    font-size: 16px;
+    vertical-align: middle;
+    color: #4d4d4d;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+}
+.my_fav_list_label{
+    margin-left: 10%;
+    font-size: 16px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.my_fav_list_label span{
+    color: #ccc;
+    margin-right: 15px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.cancel_fav{
+    font-style: normal;
+    color: #999;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+}
+.my_fav_list_a:hover{
+    color: red;
+}
         </style>
     </head>
 
@@ -95,86 +159,124 @@
         </nav>
     </body>
 
-    <body>
+    <body style="background-color: rgba(204,204,204,0.23)">
+ 
+ 
+<div class="fav_list">
+    <div data-v-357a65ed="" class="fav_list_box">
+        <div  class="fav_list_title">
+            <h3 class="fav_list_title_h3">FavoriteList</h3>
+        </div>
+        <div  class="my_fav_con">
+            <div>
+                <ul  class="my_fav_list">
 
-    <div class="row">
-            <div class="column1">
-        <p>FavoriteList</p>
-        <!--利用type属性设置无序列表项目符号为实心正方形-->
-        <table border="2px">
-            <tr>
-                <td>
+                    <?php
+                            $index = Auth::user()->id;                
+                            $result_read = DB::select('SELECT distinct table_media.title FROM `table_media` 
+                            INNER JOIN `list` ON table_media.id=list.film_id INNER JOIN `users` ON list.user_id=users.id 
+                            WHERE list.user_id=?',[$index]);
+                            $time = DB::select('SELECT creat_at FROM `list` WHERE user_id =?', [$index]);
+                            $cnt = count($result_read);
+                            for ($i=0; $i<$cnt; $i++){
+                                echo '<li class="my_fav_list_li" id="">';
+                                echo '<a  class="my_fav_list_a" href="" target="_blank">';
+                                echo $result_read[$i]->title;
+                                echo '</a>';
+                                echo '<label class="my_fav_list_label">';
+                                echo '<span>';
+                                echo $time[$i]->creat_at;
+                                echo '</span>';
+                                echo '<a  class="cancel_fav"><em>Delete</em></a>';
+                                echo '</label>';
+                                echo '</li>';
+                            }
+                        ?>
 
-                <?php
-                  $index = Auth::user()->id;                
-                  $result_read = DB::select('SELECT table_media.title FROM `table_media` 
-                  INNER JOIN `list` ON table_media.id=list.film_id INNER JOIN `users` ON list.user_id=users.id 
-                  WHERE list.user_id=?',[$index]);
-                  $cnt = count($result_read);
-                  for ($i=0; $i<$cnt; $i++){
-                    echo '<li>';
-                    echo $result_read[$i]->title;
-                    echo '</li>';
 
-                  }
-                ?>
-                </td>
-
-            </tr>
-        </table>
+                    
+                </ul>
             </div>
-     
-      <div class="column1">
-        <p>WatchList</p>
-        <table border="2px">
-            <tr>
-                <td>
+        </div>
+    </div>
+</div>
+<div class="fav_list">
+    <div data-v-357a65ed="" class="fav_list_box">
+        <div  class="fav_list_title">
+            <h3 class="fav_list_title_h3">WatchList</h3>
+        </div>
+        <div  class="my_fav_con">
+            <div>
+                <ul  class="my_fav_list">
 
-                <?php
-                  $index = Auth::user()->id;                
-                  $result_read = DB::select('SELECT table_media.title FROM `table_media` 
-                  INNER JOIN `watchlist` ON table_media.id=watchlist.film_id INNER JOIN `users` ON watchlist.user_id=users.id 
-                  WHERE watchlist.user_id=?',[$index]);
-                  $cnt = count($result_read);
-                  for ($i=0; $i<$cnt; $i++){
-                    echo '<li>';
-                    echo $result_read[$i]->title;
-                    echo '</li>';
+                    <?php
+                            $index = Auth::user()->id;                
+                            $result_read = DB::select('SELECT table_media.title FROM `table_media` 
+                            INNER JOIN `watchlist` ON table_media.id=watchlist.film_id INNER JOIN `users` ON watchlist.user_id=users.id 
+                            WHERE watchlist.user_id=?',[$index]);
+                            $time = DB::select('SELECT creat_at FROM `watchlist` WHERE user_id =?', [$index]);
+                            $cnt = count($result_read);
+                            for ($i=0; $i<$cnt; $i++){
+                                echo '<li class="my_fav_list_li" id="">';
+                                echo '<a  class="my_fav_list_a" href="" target="_blank">';
+                                echo $result_read[$i]->title;
+                                echo '</a>';
+                                echo '<label class="my_fav_list_label">';
+                                echo '<span>';
+                                echo $time[$i]->creat_at;
+                                echo '</span>';
+                                echo '<a  class="cancel_fav"><em>Delete</em></a>';
+                                echo '</label>';
+                                echo '</li>';
+                            }
+                        ?>
 
-                  }
-                ?>
-                </td>
 
-            </tr>
-        </table>
-      </div>
-      <div class="column1">
-
-        <p>HistoryList</p>
-        <table border="2px">
-            <tr>
-                <td>
-
-                <?php
-                  $index = Auth::user()->id;                
-                  $result_read = DB::select('SELECT table_media.title FROM `table_media` 
-                  INNER JOIN `history` ON table_media.id=history.film_id INNER JOIN `users` ON history.user_id=users.id 
-                  WHERE history.user_id=?',[$index]);
-                  $cnt = count($result_read);
-                  for ($i=0; $i<$cnt; $i++){
-                    echo '<li>';
-                    echo $result_read[$i]->title;
-                    echo '</li>';
-
-                  }
-                ?>
-                </td>
-
-            </tr>
-        </table>
+                    
+                </ul>
             </div>
-            </div>
-    </body>
+        </div>
+    </div>
+</div>
+<div class="fav_list">
+    <div data-v-357a65ed="" class="fav_list_box">
+        <div  class="fav_list_title">
+            <h3 class="fav_list_title_h3">HistoryList</h3>
+        </div>
+        <div  class="my_fav_con">
+            <div>
+                <ul  class="my_fav_list">
 
+                    <?php
+                            $index = Auth::user()->id;                
+                            $result_read = DB::select('SELECT table_media.title FROM `table_media` 
+                            INNER JOIN `history` ON table_media.id=history.film_id INNER JOIN `users` ON history.user_id=users.id 
+                            WHERE history.user_id=?',[$index]);
+                            $time = DB::select('SELECT creat_at FROM `history` WHERE user_id =?', [$index]);
+                            $cnt = count($result_read);
+                            for ($i=0; $i<$cnt; $i++){
+                                echo '<li class="my_fav_list_li" id="">';
+                                echo '<a  class="my_fav_list_a" href="" target="_blank">';
+                                echo $result_read[$i]->title;
+                                echo '</a>';
+                                echo '<label class="my_fav_list_label">';
+                                echo '<span>';
+                                echo $time[$i]->creat_at;
+                                echo '</span>';
+                                echo '<a  class="cancel_fav"><em>Delete</em></a>';
+                                echo '</label>';
+                                echo '</li>';
+                            }
+                        ?>
+
+
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+</body>
 
 </html>
