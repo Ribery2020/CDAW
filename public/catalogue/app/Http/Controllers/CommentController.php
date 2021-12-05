@@ -8,11 +8,13 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller{
+
+
     public function create_comment(Request $request){
-        // echo "<script>console.log('$request->user_id')</script>";
-      DB::insert('INSERT INTO `comment`( `user_id`, `film_id`, `content`, `create_at`) VALUES (?,?,?,CURRENT_TIME)' ,[$request->user_id, $request->film_id, $request->commentContent]);
-       echo $request->commentContent;
-       echo $request->user_id;
-    // DB::insert('INSERT INTO `comment`(`user_id`, `film_id`) VALUES ('.$request->user_id.','.$request->film_id);
+    $request->user_id=13;
+    $request->film_id=1;
+    $request->imdb_id='tt0111161';
+    DB::insert('INSERT INTO `comment`( `user_id`, `film_id`, `content`, `create_at`) VALUES (?,?,?,CURRENT_TIME)' ,[$request->user_id, $request->film_id, $request->commentContent]);
+    return redirect('films/'. $request->imdb_id);
     }
 }
